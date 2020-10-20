@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<atlassian-plugin key="com.edevapps.jira.applications.users-cf-extension-api-demo" name="Users CF extension API Demo" plugins-version="2">
+  <plugin-info>
+    <description>Users custom fields extension API demo application.</description>
+    <version>1.0.0</version>
+    <vendor name="eDevApps" url="http://edevapps.com/"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+
+  <resource type="i18n" name="i18n" location="users-cf-extension-api-demo"/>
+
+  <web-resource key="users-cf-extension-api-demo-resource" i18n-name-key="i18n" name="Web resources">
+    <description>Web resources module</description>
+    <resource type="download" name="users-cf-extension-api-demo.css" location="/css/users-cf-extension-api-demo.css"/>
+    <resource type="download" name="common.js" location="/js/common.js"/>
+    <transformation extension="js">
+      <transformer key="jsI18n"/>
+    </transformation>
+    <context>users-cf-extension-api-demo</context>
+    <context>jira.admin</context>
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <dependency>com.atlassian.auiplugin:aui-toggle</dependency>
+    <dependency>com.atlassian.auiplugin:dialog2</dependency>
+    <dependency>com.atlassian.auiplugin:message</dependency>
+    <dependency>com.atlassian.auiplugin:aui-date-picker</dependency>
+    <dependency>com.atlassian.auiplugin:aui-select2</dependency>
+    <dependency>com.atlassian.auiplugin:aui-form-validation</dependency>
+    <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency>
+  </web-resource>
+
+  <web-item name="Api demo item" key="users-cf-extension-api-demo-web-item" section="admin_plugins_menu/users_cf_extension_admin_section" weight="1000">
+    <description>Users custom fields extension API demo web item</description>
+    <label key="ucfe-api-demo-web-item.label"/>
+    <link linkId="jira-notifications-api-demo-web-item">/secure/UsersCFExtensionDemo!default.jspa</link>
+  </web-item>
+
+  <webwork1 name="Api demo webwork" key="users-cf-extension-api-demo-webwork-module">
+    <description>Users custom fields extension API demo webwork module</description>
+    <actions>
+      <action name="com.edevapps.jira.applications.customfields.ucfe.web.webwork.UsersCFExtensionDemoWebworkAction" alias="UsersCFExtensionDemo">
+        <view name="input">/templates/users-cf-extension-api-demo.vm</view>
+        <view name="success">/templates/users-cf-extension-api-demo.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+</atlassian-plugin>

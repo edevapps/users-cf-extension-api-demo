@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        $webResourceManager.requireResourcesForContext("users-cf-extension-api-demo")
+        <title>Notifications API Demo</title>
+        <meta name="decorator" content="atl.admin"/>
+        <meta name="admin.active.section" content="admin_plugins_menu/jira_notifications_admin_section"/>
+        <meta name="admin.active.tab" content="jira-notifications-api-demo-web-item"/>
+    </head>
+    <body>
+      <div class="aui-group aui-group-split">
+        <div class="aui-item">
+          <h2>
+            <span class="content-header" >Users CF extension API Demo</span>
+          </h2>
+        </div>
+        <div class="aui-item">
+          <a class="aui-button"
+            href="$requestContext.baseUrl/secure/UsersCFExtensionDemo!default.jspa">
+              $i18n.getText("refresh-button.label")
+          </a>
+        </div>
+      </div>
+      <div id="error" class="aui-message aui-message-error" #if (!$error) hidden="true" #end >
+        <p class="title">
+          <strong>$error</strong>
+        </p>
+      </div>
+      <div id="message" class="aui-message aui-message-info" #if (!$message) hidden="true" #end >
+        <p class="title">
+          <strong>$message</strong>
+        </p>
+      </div>
+      <div id="api-demo-container">
+        <form id="api-demo-form" class="aui" method="POST" action="$requestContext.baseUrl/secure/UsersCFExtensionDemo.jspa">
+          <div class="field-group" style="margin-top: 10px">
+            <label for="select-api-type">Select API type for action</label>
+            <select id="select-api-type" name="apiTypes" class="select short-field" >
+              #foreach ($selectItem in $apiTypes)
+                <option value = "$selectItem.value" #if($selectItem.selected == true) selected  #end >$selectItem.name</option>
+              #end
+            </select>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label for="select-project">Select project for action</label>
+            <select id="select-project" name="projectGroups" class="select" >
+              #foreach ($selectItem in $allProjects)
+                <option value = "$selectItem.value" #if($selectItem.selected == true) selected  #end >$selectItem.name</option>
+              #end
+            </select>
+          </div>
+          <h3 style="border-bottom: 1px solid #ddd;" >Custom fields(CF) options</h3>
+          <div class="field-group" style="margin-top: 10px">
+            <label id for="current-project-groups">CF groups</label>
+            <div class="aui" id="current-project-groups"><strong>$currentProjectGroups</strong></div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label for="select-cf-groups">Select group for action</label>
+            <select id="select-cf-groups" name="selectCFGroups" class="select" >
+              #foreach ($selectItem in $selectCFGroups)
+                <option value = "$selectItem.value" #if($selectItem.selected == true) selected  #end >$selectItem.name</option>
+              #end
+            </select>
+          </div>
+          <div class="buttons-container">
+            <div class="aui-buttons">
+              <div id="add-group-for-project-button" class="aui-button aui-button-primary">
+                  Add
+              </div>
+              <div id="remove-group-for-project-button" class="aui-button aui-button-primary">
+                  Remove
+              </div>
+            </div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label id for="current-project-groups">CF users</label>
+            <div class="aui" id="current-project-users-group"><strong>$!currentProjectUsersGroup</strong></div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label for="select-cf-groups">Select group for action</label>
+            <select id="select-cf-users-groups" name="selectCFUsersGroups" class="select" >
+              <option value = "" #if(!$currentProjectUsersGroup || $currentProjectUsersGroup == "") selected  #end >None</option>
+              #foreach ($selectItem in $selectCFUsersGroups)
+                <option value = "$selectItem.value" #if($selectItem.selected == true) selected  #end >$selectItem.name</option>
+              #end
+            </select>
+          </div>
+          <div class="buttons-container">
+            <div class="aui-buttons">
+              <div id="set-users-group-for-project-button" class="aui-button aui-button-primary">
+                  Set
+              </div>
+            </div>
+          </div>
+          <h3 style="border-bottom: 1px solid #ddd;" >Custom fields</h3>
+          <div class="field-group" style="margin-top: 10px">
+            <label id for="default-value-for-single-group-field">Default value for single group field</label>
+            <div class="aui" id="default-value-for-single-group-field"><strong>$!currentDefaultValueForSingleGroup</strong></div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label for="select-def-value-single-group">Select group for action</label>
+            <select id="select-def-value-single-group" name="selectDefaultValueForSingleGroup" class="select" >
+              <option value = "" #if(!$currentDefaultValueForSingleGroup || $currentDefaultValueForSingleGroup == "") selected  #end >None</option>
+              #foreach ($selectItem in $selectDefaultSingleUsersGroups)
+                <option value = "$selectItem.value" #if($selectItem.selected == true) selected  #end >$selectItem.name</option>
+              #end
+            </select>
+          </div>
+          <div class="buttons-container">
+            <div class="aui-buttons">
+              <div id="set-def-value-for-single-group-button" class="aui-button aui-button-primary">
+                  Set
+              </div>
+            </div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label id for="default-value-for-group-field">Default value for groups field</label>
+            <div class="aui" id="default-value-for-group-field"><strong>$!currentDefaultValueForGroups</strong></div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label for="select-def-value-for-groups">Select project for action</label>
+            <select id="select-def-value-for-groups" name="selectDefaultValueForGroups" class="select" >
+              #foreach ($selectItem in $selectDefaultValueForGroups)
+                <option value = "$selectItem.value" #if($selectItem.selected == true) selected  #end >$selectItem.name</option>
+              #end
+            </select>
+          </div>
+          <div class="buttons-container">
+            <div class="aui-buttons">
+              <div id="add-def-value-for-groups-button" class="aui-button aui-button-primary">
+                 Add
+              </div>
+              <div id="remove-def-value-for-groups-button" class="aui-button aui-button-primary">
+                 Remove
+              </div>
+            </div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label id for="default-value-for-single-user-field">Default value for single user field</label>
+            <div class="aui" id="default-value-for-single-user-field-field"><strong>$!currentDefaultValueForSingleUser</strong></div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label for="select-def-value-for-single-user">Select group for action</label>
+            <select id="select-def-value-for-single-user" name="selectDefaultValueForSingleGroup" class="select" >
+              <option value = "" #if(!$currentDefaultValueForSingleUser || $currentDefaultValueForSingleUser == "") selected  #end >None</option>
+              #foreach ($selectItem in $selectDefaultSingleUsers)
+                <option value = "$selectItem.value" #if($selectItem.selected == true) selected  #end >$selectItem.name</option>
+              #end
+            </select>
+          </div>
+          <div class="buttons-container">
+            <div class="aui-buttons">
+              <div id="set-def-value-for-single-user-button" class="aui-button aui-button-primary">
+                  Set
+              </div>
+            </div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label id for="default-value-for-users-field">Default value for users field</label>
+            <div class="aui" id="default-value-for-users-field"><strong>$!currentDefaultValueForUsers</strong></div>
+          </div>
+          <div class="field-group" style="margin-top: 10px">
+            <label for="select-def-value-for-users">Select project for action</label>
+            <select id="select-def-value-for-users" name="selectDefaultValueForUsers" class="select" >
+              #foreach ($selectItem in $selectDefaultValueForUsers)
+                <option value = "$selectItem.value" #if($selectItem.selected == true) selected  #end >$selectItem.name</option>
+              #end
+            </select>
+          </div>
+          <div class="buttons-container">
+            <div class="aui-buttons">
+              <div id="add-def-value-for-users-button" class="aui-button aui-button-primary">
+                 Add
+              </div>
+              <div id="remove-def-value-for-users-button" class="aui-button aui-button-primary">
+                 Remove
+              </div>
+            </div>
+          </div>
+
+          <input type="hidden" id="api-type" name="apiType" value="$!apiType">
+          <input type="hidden" id="action" name="action" value="">
+          <input type="hidden" id="selected-project-key" name="selectedProjectKey" value="$!selectedProjectKey">
+          <input type="hidden" id="selected-cf-group-for-groups" name="selectedCFGroupForGroups" value="$!selectedCFGroupForGroups">
+          <input type="hidden" id="selected-cf-group-for-users-group" name="selectedCFGroupForUsersGroup" value="$!selectedCFGroupForUsersGroup">
+          <input type="hidden" id="selected-def-value-for-single-group" name="selectedDefaultValueForSingleGroup" value="$!selectedDefaultValueForSingleGroup">
+          <input type="hidden" id="selected-def-value-for-groups" name="selectedDefaultValueForGroups" value="$!selectedDefaultValueForGroups">
+          <input type="hidden" id="selected-def-value-for-single-user" name="selectedDefaultValueForSingleUser" value="$!selectedDefaultValueForSingleUser">
+          <input type="hidden" id="selected-def-value-for-users" name="selectedDefaultValueForUsers" value="$!selectedDefaultValueForUsers">
+        </form>
+      </div>
+
+      <script type="text/javascript">
+        #include("/js/users-cf-extension-api-demo.js")
+      </script>
+    </body>
+</html>
