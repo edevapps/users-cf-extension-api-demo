@@ -62,7 +62,7 @@ AJS.toInit(function(a) {
       var apiType = AJS.$('#api-type').val();
       AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/users-groups/' + groupName,
         function (response) {
-          location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType;
+          location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType + "&selectedProjectKey=" + projectKey;
         });
     }
   });
@@ -79,7 +79,7 @@ AJS.toInit(function(a) {
       var apiType = AJS.$('#api-type').val();
       AJS.$.del('/rest/userscfextension/1.0/projects/' + projectKey + '/users-groups/' + groupName,
         function (response) {
-          location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType;
+          location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType+ "&selectedProjectKey=" + projectKey;
         });
     }
   });
@@ -96,7 +96,7 @@ AJS.toInit(function(a) {
       var apiType = AJS.$('#api-type').val();
       AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/users-group?name=' + groupName,
        function (response) {
-         location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType;
+         location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType+ "&selectedProjectKey=" + projectKey;
        });
     }
   });
@@ -111,9 +111,9 @@ AJS.toInit(function(a) {
       var projectKey = AJS.$('#selected-project-key').val();
       var groupName = AJS.$('#selected-def-value-for-single-group').val();
       var apiType = AJS.$('#api-type').val();
-      AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/properties/single-group-field/default-group?name=' + groupName,
+      AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/custom-fields/single-group-field/default-group?name=' + groupName,
        function (response) {
-         location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType;
+         location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType+ "&selectedProjectKey=" + projectKey;
        });
     }
   });
@@ -128,9 +128,9 @@ AJS.toInit(function(a) {
       var projectKey = AJS.$('#selected-project-key').val();
       var groupName = AJS.$('#selected-def-value-for-groups').val();
       var apiType = AJS.$('#api-type').val();
-      AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/properties/groups-field/default-groups/' + groupName,
+      AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/custom-fields/groups-field/default-groups/' + groupName,
       function (response) {
-        location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType;
+        location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType+ "&selectedProjectKey=" + projectKey;
       });
     }
   });
@@ -145,9 +145,9 @@ AJS.toInit(function(a) {
       var projectKey = AJS.$('#selected-project-key').val();
       var groupName = AJS.$('#selected-def-value-for-groups').val();
       var apiType = AJS.$('#api-type').val();
-      AJS.$.del('/rest/userscfextension/1.0/projects/' + projectKey + '/properties/groups-field/default-groups/' + groupName,
+      AJS.$.del('/rest/userscfextension/1.0/projects/' + projectKey + '/custom-fields/groups-field/default-groups/' + groupName,
        function (response) {
-         location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType;
+         location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType + "&selectedProjectKey=" + projectKey;
        });
     }
   });
@@ -162,9 +162,9 @@ AJS.toInit(function(a) {
       var projectKey = AJS.$('#selected-project-key').val();
       var userName = AJS.$('#selected-def-value-for-single-user').val();
       var apiType = AJS.$('#api-type').val();
-      AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/properties/single-user-field/default-user?name=' + userName,
+      AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/custom-fields/single-user-field/default-user?name=' + userName,
       function (response) {
-        location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType;
+        location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType + "&selectedProjectKey=" + projectKey;
       });
     }
   });
@@ -179,9 +179,9 @@ AJS.toInit(function(a) {
         var projectKey = AJS.$('#selected-project-key').val();
         var userName = AJS.$('#selected-def-value-for-users').val();
         var apiType = AJS.$('#api-type').val();
-        AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/properties/users-field/default-users/' + userName,
+        AJS.$.post2('/rest/userscfextension/1.0/projects/' + projectKey + '/custom-fields/users-field/default-users/' + userName,
         function (response) {
-         location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType;
+         location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType + "&selectedProjectKey=" + projectKey;
         });
       }
     });
@@ -196,9 +196,9 @@ AJS.toInit(function(a) {
         var projectKey = AJS.$('#selected-project-key').val();
         var userName = AJS.$('#selected-def-value-for-users').val();
         var apiType = AJS.$('#api-type').val();
-        AJS.$.del('/rest/userscfextension/1.0/projects/' + projectKey + '/properties/users-field/default-users/' + userName,
+        AJS.$.del('/rest/userscfextension/1.0/projects/' + projectKey + '/custom-fields/users-field/default-users/' + userName,
         function (response) {
-        location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType;
+        location.href = '/secure/UsersCFExtensionDemo!default.jspa?apiType=' + apiType + "&selectedProjectKey=" + projectKey;
         });
       }
     });

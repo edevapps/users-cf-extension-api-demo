@@ -39,7 +39,7 @@ public class UsersCFExtensionDemoWebworkAction extends JiraWebActionSupport {
   public static final String EMPTY_STRING = "";
   private static final String NULL_VAL = "null";
   private static final String ACTION_PAR = "action";
-  private static final String MESSAGE_VALUE_NOT_EMPTY_RES = "message-is-not-be-empty.message";
+  private static final String ERROR_PAR = "error";
   public static final String SELECTED_PROJECT_KEY_PAR = "selectedProjectKey";
   public static final String SELECTED_CF_GROUP_FOR_GROUPS_PAR = "selectedCFGroupForGroups";
   public static final String SELECTED_CF_GROUP_FOR_USERS_GROUP_PAR = "selectedCFGroupForUsersGroup";
@@ -228,37 +228,28 @@ public class UsersCFExtensionDemoWebworkAction extends JiraWebActionSupport {
       if (this.currentAction != null) {
         if (Action.ADD_GROUP_FOR_PROJECT.equals(this.currentAction)) {
           addGroupForProject();
-          return forceRedirect(DEFAULT_HOME_PAGE_URL);
         } else if (Action.REMOVE_GROUP_FOR_PROJECT.equals(this.currentAction)) {
           removeGroupForProject();
-          return forceRedirect(DEFAULT_HOME_PAGE_URL);
         } else if (Action.SET_USERS_GROUP_FOR_PROJECT.equals(this.currentAction)) {
           setUsersGroupForProject();
-          return forceRedirect(DEFAULT_HOME_PAGE_URL);
         } else if (Action.SET_DEF_VALUE_FOR_SINGLE_GROUP.equals(this.currentAction)) {
           setDefaultGroupForSingleGroup();
-          return forceRedirect(DEFAULT_HOME_PAGE_URL);
         } else if (Action.ADD_DEF_VALUE_FOR_GROUPS.equals(this.currentAction)) {
           addDefaultForGroup();
-          return forceRedirect(DEFAULT_HOME_PAGE_URL);
         } else if (Action.REMOVE_DEF_VALUE_FOR_GROUPS.equals(this.currentAction)) {
           removeDefaultForGroup();
-          return forceRedirect(DEFAULT_HOME_PAGE_URL);
         } else if (Action.SET_DEF_VALUE_FOR_SINGLE_USER.equals(this.currentAction)) {
           setDefaultForSingleUser();
-          return forceRedirect(DEFAULT_HOME_PAGE_URL);
         } else if (Action.ADD_DEF_VALUE_FOR_USERS.equals(this.currentAction)) {
           addDefaultForUsers();
-          return forceRedirect(DEFAULT_HOME_PAGE_URL);
         } else if (Action.REMOVE_DEF_VALUE_FOR_USERS.equals(this.currentAction)) {
           removeDefaultForUsers();
-          return forceRedirect(DEFAULT_HOME_PAGE_URL);
         }
+        return forceRedirect(DEFAULT_HOME_PAGE_URL);
       }
-      this.message = this.i18nResolver.getText(MESSAGE_VALUE_NOT_EMPTY_RES);
     } catch (Exception ex) {
-      this.error = ex.getMessage();
       log.error(this.error);
+      return forceRedirect(DEFAULT_HOME_PAGE_URL + "?error=" + ex.getMessage());
     }
     return SUCCESS;
   }
@@ -328,6 +319,7 @@ public class UsersCFExtensionDemoWebworkAction extends JiraWebActionSupport {
   }
 
   private void loadContent() {
+    this.error = tryGetRequestParameter(ERROR_PAR);
     //Current api type
     this.apiType = getCurrentApiType();
     //Selected values for selects
